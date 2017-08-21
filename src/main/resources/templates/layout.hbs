@@ -1,0 +1,48 @@
+{{#block "header"}}
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>{{#block "title"}}Welcome to Walkies{{/block}}</title>
+
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+        <link rel="stylesheet" href="/css/main.css">
+    </head>
+    <body>
+    <ul class="nav nav-tabs">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="/walker">See All Walkers</a></li>
+        <li role="presentation"><a href="/Walker/new">Add a New Walker</a></li>
+    </ul>
+{{/block}}
+
+<div class="container">
+
+    <!--begin main template-->
+    <div class="page-header">
+        <img src="/images/walker1.jpg" width="100%">
+        <h1>Welcome to Walkies. <small>A journey into companionship!</small></h1>
+    </div>
+
+    <div class="col-md-12">
+        {{#block "content"}}
+
+        {{/block}}
+    </div>
+
+    <!--end main template-->
+{{#block "footer"}}
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted"><a href="/walker/delete">DELETE ALL WALKERS</a></p>
+            </div>
+        </footer>
+
+    </div>
+
+    </body>
+    </html>
+{{/block}}
