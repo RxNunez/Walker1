@@ -13,13 +13,6 @@ public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
 
-
-        get("/walker/delete", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            Walker.clearAllWalker();
-            return new ModelAndView(model, "success.hbs");
-        }, new HandlebarsTemplateEngine());
-
         get("/walker/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "walker-form.hbs");
@@ -27,8 +20,8 @@ public class App {
 
         post("/walker/new", (request, response) -> {
             Map<String, Object> model = new HashMap<String, Object>();
-            String content = request.queryParams("walkerName");
-            Walker newWalker = new Walker(content);
+            String walkerName = request.queryParams("walkerName");
+            Walker newWalker = new Walker(walkerName);
             model.put("walker", newWalker);
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
@@ -42,8 +35,8 @@ public class App {
 
         get("/walker/:id", (request, response) ->  {
             Map<String, Object> model = new HashMap<>();
-            int idOfPostToFind = Integer.parseInt(request.params("id"));
-            Walker foundWalker = Walker.findById(idOfPostToFind);
+            int idOfWalkerToFind = Integer.parseInt(request.params("id"));
+            Walker foundWalker = Walker.findById(idOfWalkerToFind);
             model.put("walker", foundWalker);
             return new ModelAndView(model, "walker-detail.hbs");
         }, new HandlebarsTemplateEngine());
@@ -58,10 +51,10 @@ public class App {
 
         post("/walker/:id/update", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
-            String newContent = request.queryParams("walkerName");
+            String newWalkerName = request.queryParams("walkerName");
             int idOfWalkerToEdit = Integer.parseInt(request.params("id"));
             Walker editWalker = Walker.findById(idOfWalkerToEdit);
-            editWalker.update(newContent);
+            editWalker.update(newWalkerName);
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 

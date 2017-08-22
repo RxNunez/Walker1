@@ -4,11 +4,11 @@ html {
 }
 
 body {
-  background: url("../images/walker2.jpg");
+  background: url("../images/walker1.jpg");
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  color: white;
+  color: black;
 }
 
 input {
