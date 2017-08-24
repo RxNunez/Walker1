@@ -13,27 +13,45 @@ public class App {
     public static void main(String[] args) {
         staticFileLocation("/public");
 
-        get("/walker/new", (request, response) -> {
+        // delete all walkers
+        get("/walkers/delete", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Walker.clearAllWalker();
+            return new ModelAndView(model, "success.hbs");
+        }, new HandlebarsTemplateEngine());
+
+       // home page
+        get ("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return new ModelAndView(model, "layout.hbs");
+        }, new HandlebarsTemplateEngine());
+
+        //show new walker form
+        get("/walkers/new", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             return new ModelAndView(model, "walker-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/walker/new", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
+        //process new walker
+        post("/walkers/new", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
             String walkerName = request.queryParams("walkerName");
             Walker newWalker = new Walker(walkerName);
             model.put("walker", newWalker);
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/", (request, response) -> {
-            Map<String, Object> model = new HashMap<String, Object>();
-            ArrayList<Walker> walker = Walker.getAll();
-            model.put("walker", walker);
+        //show all walkers
+        get("/walkers", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            ArrayList<Walker> walkers = Walker.getAll();
+            model.put("walkers", walkers);
             return new ModelAndView(model, "index.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/walker/:id", (request, response) ->  {
+
+        //show individual
+        get("/walkers/:id", (request, response) ->  {
             Map<String, Object> model = new HashMap<>();
             int idOfWalkerToFind = Integer.parseInt(request.params("id"));
             Walker foundWalker = Walker.findById(idOfWalkerToFind);
@@ -41,7 +59,8 @@ public class App {
             return new ModelAndView(model, "walker-detail.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/walker/:id/update", (request, response) -> {
+        //show form walker update
+        get("/walkers/:id/update", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfWalkerToEdit = Integer.parseInt(request.params("id"));
             Walker editWalker = Walker.findById(idOfWalkerToEdit);
@@ -49,7 +68,8 @@ public class App {
             return new ModelAndView(model, "walker-form.hbs");
         }, new HandlebarsTemplateEngine());
 
-        post("/walker/:id/update", (request,response) -> {
+        //process update
+        post("/walkers/:id/update", (request,response) -> {
             Map<String, Object> model = new HashMap<>();
             String newWalkerName = request.queryParams("walkerName");
             int idOfWalkerToEdit = Integer.parseInt(request.params("id"));
@@ -58,7 +78,8 @@ public class App {
             return new ModelAndView(model, "success.hbs");
         }, new HandlebarsTemplateEngine());
 
-        get("/walker/:id/delete", (req, res) -> {
+        // delete individual
+        get("/walkers/:id/delete", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             int idOfWalkerToDelete = Integer.parseInt(req.params("id"));
             Walker deleteWalker = Walker.findById(idOfWalkerToDelete);

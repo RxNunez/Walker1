@@ -2,10 +2,10 @@
 
     <h1>Walker List</h1>
 
-    {{#if walker}}
-        {{#each walker}}
+    {{#if walkers}}
+        {{#each walkers}}
         <div class = "well">
-            <p>{{walkerName}} <a href="/walker/{{id}}">read more...</a></p>
+            <p>{{walkerName}} <a href="/walkers{{id}}">read more...</a></p>
         </div>
         {{/each}}
     {{else}}
